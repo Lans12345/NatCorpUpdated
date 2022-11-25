@@ -88,28 +88,28 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () async {
-          print(passwordController.text);
-          print(emailController.text);
+          if (_formKey.currentState!.validate()) {
+            try {
+              final FirebaseAuth _auth1 = FirebaseAuth.instance;
 
-          try {
-            final FirebaseAuth _auth1 = FirebaseAuth.instance;
-
-            var _authenticatedUser = await _auth1.signInWithEmailAndPassword(
-                email: emailController.text, password: passwordController.text);
+              var _authenticatedUser = await _auth1.signInWithEmailAndPassword(
+                  email: emailController.text,
+                  password: passwordController.text);
 
 //where _email and _password were simply what the user typed in the textfields.
 
-            if (_authenticatedUser.user!.emailVerified) {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => bottomButton()));
-              //Verified
-            } else {
-              //Not verified
+              if (_authenticatedUser.user!.emailVerified) {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => bottomButton()));
+                //Verified
+              } else {
+                //Not verified
 
-              Fluttertoast.showToast(msg: 'Please verify your email!');
+                Fluttertoast.showToast(msg: 'Please verify your email!');
+              }
+            } catch (e) {
+              Fluttertoast.showToast(msg: e.toString());
             }
-          } catch (e) {
-            print(e);
           }
         },
         child: const Text(

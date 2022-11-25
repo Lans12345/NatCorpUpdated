@@ -1,10 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:natcorp/Pages/home/home.dart';
 import 'package:natcorp/Pages/login/login_page.dart';
-import 'package:natcorp/Pages/mainButtom/bottom_page.dart';
-import 'package:natcorp/Pages/onboarding/onboarding_page.dart';
-import 'package:natcorp/Pages/splash/splash_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
