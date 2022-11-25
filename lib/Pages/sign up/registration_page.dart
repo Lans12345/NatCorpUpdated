@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:natcorp/Pages/home/home.dart';
 import 'package:natcorp/Pages/mainButtom/bottom_page.dart';
 import 'package:natcorp/Pages/sign%20up/model/user_model.dart';
 import 'package:natcorp/widgets/agreement_page.dart';
@@ -174,7 +173,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           try {
-            signUp(email.text, password.text);
             _auth
                 .createUserWithEmailAndPassword(
                     email: email.text, password: password.text)
@@ -183,7 +181,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   MaterialPageRoute(builder: (context) => VerifyScreen()));
             });
           } catch (e) {
-            print(e);
+            Fluttertoast.showToast(msg: e.toString());
           }
         },
         child: const Text(
@@ -278,12 +276,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //signUp controller
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {postDetailsToFirestore()})
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
-      });
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) => {postDetailsToFirestore()})
+            .catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      } catch (e) {
+        Fluttertoast.showToast(msg: e.toString());
+      }
     }
   }
 

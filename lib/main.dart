@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.green,
         primaryColor: Color(0xFF43B1B7),
-        accentColor: Color(0xFFFED408),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
+            .copyWith(secondary: Color(0xFFFED408)),
       ),
       home: LoginScreen(),
     );
