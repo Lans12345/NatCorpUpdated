@@ -172,16 +172,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          try {
-            _auth
-                .createUserWithEmailAndPassword(
-                    email: email.text, password: password.text)
-                .then((_) {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => VerifyScreen()));
-            });
-          } catch (e) {
-            Fluttertoast.showToast(msg: e.toString());
+          if (_formKey.currentState!.validate()) {
+            try {
+              _auth
+                  .createUserWithEmailAndPassword(
+                      email: email.text, password: password.text)
+                  .then((_) {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => VerifyScreen()));
+              });
+            } catch (e) {
+              Fluttertoast.showToast(msg: e.toString());
+            }
           }
         },
         child: const Text(
